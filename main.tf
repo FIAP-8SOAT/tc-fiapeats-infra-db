@@ -1,3 +1,12 @@
+terraform {
+  backend "s3" {
+    bucket  = "terraform-fiapeats"
+    key     = "state/fiapeatsdb/terraform.tfstate"
+    region  = "us-east-1"
+    encrypt = true
+  }
+}
+
 provider "aws" {
     region = "us-east-1"  # Substitua pela região desejada
 }
