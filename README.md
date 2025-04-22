@@ -5,6 +5,7 @@ Este projeto provisiona uma tabela DynamoDB na AWS utilizando Terraform que ser�
 ---
 
 📌 Finalidade
+
 A tabela será usada em um fluxo que permite:
 
 * Registrar o início e o fim do upload de vídeos
