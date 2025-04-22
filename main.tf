@@ -8,35 +8,22 @@ terraform {
 }
 
 provider "aws" {
-    region = "us-east-1"  # Substitua pela região desejada
+  region = "us-east-1"
 }
 
-data "aws_vpc" "default" {
-  default = true
-}
+resource "aws_dynamodb_table" "minha_tabela" {
+  name           = var.table_name
+  billing_mode   = "PAY_PER_REQUEST"
+  
+  hash_key       = "id"
 
-resource "aws_security_group" "default" {
-    vpc_id      = "${data.aws_vpc.default.id}"
-    name        = "fiapeatsdb-sg"
-    description = "Allow all inbound for FiapeatsDB"
-    ingress {
-        from_port   = 5432
-        to_port     = 5432
-        protocol    = "tcp" 
-        cidr_blocks = ["0.0.0.0/0"]
-    }
-}
+  attribute {
+    name = "id"
+    type = "S"
+  }
 
-resource "aws_db_instance" "default" {
-    identifier           = "fiapeatsdb"
-    allocated_storage    = 5
-    db_name              = "fiapeatsdb"
-    engine               = "postgres"
-    engine_version       = "16.3"
-    instance_class       = "db.t3.micro"
-    username             = "sa"
-    password             = "fiapeatsdb-pass"
-    vpc_security_group_ids = [aws_security_group.default.id]
-    skip_final_snapshot  = true
-    publicly_accessible  = true
+  tags = {
+    Environment = "dev"
+    Project     = "fiapeatsdb"
+  }
 }

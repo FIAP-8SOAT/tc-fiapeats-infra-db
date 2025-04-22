@@ -3,3 +3,9 @@ variable "destroy_infra" {
   type        = bool
   default     = false
 }
+
+variable "table_name" {
+  description = "Nome da tabela DynamoDB"
+  type        = string
+  default     = "fiapeatsdb"
+}
